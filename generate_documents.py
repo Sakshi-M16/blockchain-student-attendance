@@ -56,8 +56,8 @@ def generate_word_doc(filepath):
     table.autofit = False
 
     details = [
-        ("Student Name:", "[Student Name]"),
-        ("Registration Number:", "[Registration Number]"),
+        ("Student Name:", "Sakshi Mukherjee"),
+        ("Registration Number:", "220905246"),
         ("Assignment Title:", "Blockchain Technology (CSE4444) - Assignment 2"),
         ("Title of Developed DApp:", "Blockchain-Based Student Attendance Management System"),
         ("GitHub Repository Link:", "https://github.com/Sakshi-M16/blockchain-student-attendance")
@@ -284,8 +284,8 @@ def generate_pdf_doc(filepath):
 
     # Details Table
     details_data = [
-        [Paragraph("<b>Student Name:</b>", body_style), Paragraph("<i>[Student Name]</i>", body_style)],
-        [Paragraph("<b>Registration Number:</b>", body_style), Paragraph("<i>[Registration Number]</i>", body_style)],
+        [Paragraph("<b>Student Name:</b>", body_style), Paragraph("Sakshi Mukherjee", body_style)],
+        [Paragraph("<b>Registration Number:</b>", body_style), Paragraph("220905246", body_style)],
         [Paragraph("<b>Assignment Title:</b>", body_style), Paragraph("Blockchain Technology (CSE4444) - Assignment 2", body_style)],
         [Paragraph("<b>Title of Developed DApp:</b>", body_style), Paragraph("Blockchain-Based Student Attendance Management System", body_style)],
         [Paragraph("<b>GitHub Repository Link:</b>", body_style), Paragraph("https://github.com/Sakshi-M16/blockchain-student-attendance", body_style)]
@@ -387,12 +387,20 @@ def generate_pdf_doc(filepath):
 
 def main():
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    docx_path = os.path.join(base_dir, "YourName_RegNum_BT_Assignment2.docx")
-    pdf_path = os.path.join(base_dir, "YourName_RegNum_BT_Assignment2.pdf")
+    
+    # Official named submission files matching student details
+    docx_named = os.path.join(base_dir, "SakshiMukherjee_220905246_BT_Assignment2.docx")
+    pdf_named = os.path.join(base_dir, "SakshiMukherjee_220905246_BT_Assignment2.pdf")
+    generate_word_doc(docx_named)
+    generate_pdf_doc(pdf_named)
 
-    generate_word_doc(docx_path)
-    generate_pdf_doc(pdf_path)
-    print("Both submission documents generated successfully!")
+    # Generic template names as requested in Assignment PDF prompt
+    docx_generic = os.path.join(base_dir, "YourName_RegNum_BT_Assignment2.docx")
+    pdf_generic = os.path.join(base_dir, "YourName_RegNum_BT_Assignment2.pdf")
+    generate_word_doc(docx_generic)
+    generate_pdf_doc(pdf_generic)
+
+    print("Generated both named and generic submission documents successfully!")
 
 if __name__ == "__main__":
     main()

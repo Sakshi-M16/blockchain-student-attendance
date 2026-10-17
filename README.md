@@ -2,8 +2,8 @@
 
 **Course:** Blockchain Technology (CSE4444)  
 **Assignment:** Assignment 2: Decentralized Application (DApp) Development  
-**Student Name:** `[Your Name]`  
-**Registration Number:** `[Your Registration Number]`  
+**Student Name:** Sakshi Mukherjee  
+**Registration Number:** 220905246  
 **Repository Name:** `blockchain-student-attendance`  
 **GitHub URL:** `https://github.com/Sakshi-M16/blockchain-student-attendance`  
 
