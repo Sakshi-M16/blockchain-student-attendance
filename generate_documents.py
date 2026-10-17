@@ -60,7 +60,7 @@ def generate_word_doc(filepath):
         ("Registration Number:", "[Registration Number]"),
         ("Assignment Title:", "Blockchain Technology (CSE4444) - Assignment 2"),
         ("Title of Developed DApp:", "Blockchain-Based Student Attendance Management System"),
-        ("GitHub Repository Link:", "https://github.com/[YourUsername]/blockchain-student-attendance")
+        ("GitHub Repository Link:", "https://github.com/Sakshi-M16/blockchain-student-attendance")
     ]
 
     for i, (label, val) in enumerate(details):
@@ -288,7 +288,7 @@ def generate_pdf_doc(filepath):
         [Paragraph("<b>Registration Number:</b>", body_style), Paragraph("<i>[Registration Number]</i>", body_style)],
         [Paragraph("<b>Assignment Title:</b>", body_style), Paragraph("Blockchain Technology (CSE4444) - Assignment 2", body_style)],
         [Paragraph("<b>Title of Developed DApp:</b>", body_style), Paragraph("Blockchain-Based Student Attendance Management System", body_style)],
-        [Paragraph("<b>GitHub Repository Link:</b>", body_style), Paragraph("https://github.com/[YourUsername]/blockchain-student-attendance", body_style)]
+        [Paragraph("<b>GitHub Repository Link:</b>", body_style), Paragraph("https://github.com/Sakshi-M16/blockchain-student-attendance", body_style)]
     ]
 
     t_details = Table(details_data, colWidths=[150, 350])

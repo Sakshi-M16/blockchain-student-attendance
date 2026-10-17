@@ -5,6 +5,7 @@
 **Student Name:** `[Your Name]`  
 **Registration Number:** `[Your Registration Number]`  
 **Repository Name:** `blockchain-student-attendance`  
+**GitHub URL:** `https://github.com/Sakshi-M16/blockchain-student-attendance`  
 
 ---
 
