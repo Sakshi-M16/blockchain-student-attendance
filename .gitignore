@@ -1,0 +1,28 @@
+# Node & Dependency directories
+node_modules/
+package-lock.json
+
+# Environment variables & Sensitive Keys
+.env
+.env.local
+*.secret
+*seed*.txt
+*key*.json
+*private*.key
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# IDE & OS temporary files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build artifacts that are regenerated
+*.log

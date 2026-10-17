@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blockchain Student Attendance Management System</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Ethers.js v5.7.2 CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <h1>Student Attendance Management System</h1>
+        <p class="subtitle">Decentralized, Immutable & Transparent Attendance Logging on Ethereum</p>
+        <span class="course-badge">CSE4444 - Blockchain Technology | Assignment 2</span>
+      </div>
+      <div class="wallet-bar">
+        <button id="connectWalletBtn" class="btn btn-primary">Connect MetaMask</button>
+        <div id="walletDetails" class="wallet-details hidden">
+          <div class="status-pill">
+            <span class="dot online"></span>
+            <span id="accountDisplay">0x00...0000</span>
+          </div>
+          <div class="status-pill" id="networkPill">
+            <span id="networkDisplay">Network</span>
+          </div>
+          <div class="status-pill" id="rolePill">
+            <span id="roleDisplay">Viewer</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Contract Config Bar -->
+    <section class="card config-card">
+      <div class="card-header">
+        <h3>Smart Contract Configuration</h3>
+        <span class="info-tag" id="courseDisplay">Course: Not Connected</span>
+      </div>
+      <div class="config-grid">
+        <div class="form-group flex-grow">
+          <label for="contractAddressInput">Deployed Contract Address:</label>
+          <input type="text" id="contractAddressInput" placeholder="0x... (Enter deployed contract address)">
+        </div>
+        <div class="form-actions">
+          <button id="loadContractBtn" class="btn btn-secondary">Load Contract</button>
+        </div>
+      </div>
+      <p class="helper-text">Deploy via Remix IDE (using Ganache or Ethereum Testnet) and paste the deployed address above.</p>
+    </section>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+      <!-- Left Column: Instructor Operations -->
+      <div class="column">
+        <!-- Register Student Card -->
+        <section class="card">
+          <div class="card-header">
+            <h3>1. Register Student</h3>
+            <span class="badge badge-admin">Instructor Only</span>
+          </div>
+          <p class="card-desc">Add a new student to the blockchain registry.</p>
+          <form id="registerStudentForm">
+            <div class="form-group">
+              <label for="regRoll">Student Roll Number:</label>
+              <input type="number" id="regRoll" placeholder="e.g. 101" required min="1">
+            </div>
+            <div class="form-group">
+              <label for="regName">Student Full Name:</label>
+              <input type="text" id="regName" placeholder="e.g. Alice Johnson" required>
+            </div>
+            <button type="submit" id="btnRegister" class="btn btn-action">Register on Blockchain</button>
+          </form>
+        </section>
+
+        <!-- Mark Attendance Card -->
+        <section class="card">
+          <div class="card-header">
+            <h3>2. Mark Attendance</h3>
+            <span class="badge badge-admin">Instructor Only</span>
+          </div>
+          <p class="card-desc">Record attendance for a student on a specific lecture date.</p>
+          <form id="markAttendanceForm">
+            <div class="form-group">
+              <label for="attRoll">Student Roll Number:</label>
+              <input type="number" id="attRoll" placeholder="e.g. 101" required min="1">
+            </div>
+            <div class="form-group">
+              <label for="attDate">Lecture Date (YYYYMMDD):</label>
+              <input type="number" id="attDate" placeholder="e.g. 20261017" required>
+            </div>
+            <div class="form-group">
+              <label>Attendance Status:</label>
+              <div class="radio-group">
+                <label><input type="radio" name="attStatus" value="present" checked> Present</label>
+                <label><input type="radio" name="attStatus" value="absent"> Absent</label>
+              </div>
+            </div>
+            <button type="submit" id="btnMarkAttendance" class="btn btn-action">Record Attendance</button>
+          </form>
+        </section>
+      </div>
+
+      <!-- Right Column: Verification & Public Queries -->
+      <div class="column">
+        <!-- Query Student Card -->
+        <section class="card">
+          <div class="card-header">
+            <h3>3. Verify Student Attendance</h3>
+            <span class="badge badge-public">Public Query</span>
+          </div>
+          <p class="card-desc">Retrieve verified, immutable attendance data directly from the ledger.</p>
+          <form id="queryStudentForm">
+            <div class="form-group">
+              <label for="queryRoll">Enter Roll Number:</label>
+              <div class="input-with-button">
+                <input type="number" id="queryRoll" placeholder="e.g. 101" required min="1">
+                <button type="submit" class="btn btn-secondary">Query</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Result Display -->
+          <div id="queryResult" class="query-result hidden">
+            <div class="result-header">
+              <h4 id="resStudentName">-</h4>
+              <span id="resStatusBadge" class="badge">Active</span>
+            </div>
+            <div class="result-details">
+              <div class="detail-item">
+                <span class="detail-label">Roll Number:</span>
+                <span class="detail-val" id="resRollNumber">-</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Attended Lectures:</span>
+                <span class="detail-val" id="resAttended">-</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Total Conducted:</span>
+                <span class="detail-val" id="resTotal">-</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Attendance %:</span>
+                <span class="detail-val bold" id="resPercentage">-</span>
+              </div>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="resProgressBar" style="width: 0%;"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Registered Students Directory -->
+        <section class="card">
+          <div class="card-header">
+            <h3>4. Student Directory</h3>
+            <button id="btnRefreshDirectory" class="btn btn-small">Refresh List</button>
+          </div>
+          <p class="card-desc">Overview of all registered students fetched from blockchain state.</p>
+          <div class="table-responsive">
+            <table class="data-table" id="directoryTable">
+              <thead>
+                <tr>
+                  <th>Roll No</th>
+                  <th>Name</th>
+                  <th>Attended</th>
+                  <th>Percentage</th>
+                </tr>
+              </thead>
+              <tbody id="directoryTableBody">
+                <tr>
+                  <td colspan="4" class="text-center text-muted">No contract loaded or no students registered yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Live Transaction & Event Console -->
+    <section class="card console-card">
+      <div class="card-header">
+        <h3>Transaction Activity & System Console</h3>
+        <button id="btnClearConsole" class="btn btn-small">Clear</button>
+      </div>
+      <div id="consoleLog" class="console-box">
+        <div class="console-line info">[System] DApp loaded. Please connect MetaMask to begin.</div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Blockchain Technology (CSE4444) Assignment 2 | Developed with Solidity, Ethers.js & MetaMask</p>
+    </footer>
+  </div>
+
+  <!-- Contract ABI Script -->
+  <script src="contract_abi.js"></script>
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
