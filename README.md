@@ -6,6 +6,7 @@
 **Registration Number:** 220905246  
 **Repository Name:** `blockchain-student-attendance`  
 **GitHub URL:** `https://github.com/Sakshi-M16/blockchain-student-attendance`  
+**Live DApp (GitHub Pages):** `https://sakshi-m16.github.io/blockchain-student-attendance/`  
 
 ---
 
